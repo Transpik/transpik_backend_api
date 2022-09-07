@@ -2,6 +2,7 @@ const fastify = require('fastify')({
     logger: true
 });
 
+fastify.register(require('./routes/usersRoutes'));
 
 
 fastify.listen({port: 3000, host: 'localhost'}, (err, address) => {
@@ -11,4 +12,4 @@ fastify.listen({port: 3000, host: 'localhost'}, (err, address) => {
     }
     // when server is up and running perfectly
     console.log(`Server is up and running at ${address}`);
-})
+});

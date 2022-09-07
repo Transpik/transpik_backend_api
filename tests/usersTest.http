@@ -1,0 +1,14 @@
+## @author rajitha kumara
+## @extension vscode REST client
+
+
+## /users routes test
+
+## /users
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "rajithakumara@gmail.com",
+    "password": "sample#@123"
+}
