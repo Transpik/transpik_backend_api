@@ -3,11 +3,15 @@ const verifyOpts = {
         body: {
             type: 'object',
             propertise : {
+                email: {
+                    type: 'string',
+                    format: 'email',
+                },
                 businessName: {
-                    type: "string",
+                    type: 'string',
                 },
                 businessRegNo: {
-                    type: "string",
+                    type: 'string',
                 },
                 location: {
                     type: 'object',
@@ -30,7 +34,7 @@ const verifyOpts = {
                     },
                     required: ['address', 'state', 'stateCode', 'city', 'country'],
                 },
-                required: ['businessName', 'businessRegNo', 'location'],
+                required: ['email', 'businessName', 'businessRegNo', 'location'],
             }
         }
     }
