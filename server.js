@@ -1,6 +1,7 @@
 const fastify = require('fastify')({
     logger: true
 });
+const mongoose = require('mongoose');
 
 fastify.register(require('./routes/usersRoutes'));
 
