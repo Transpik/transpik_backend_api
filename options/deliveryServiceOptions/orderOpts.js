@@ -2,7 +2,7 @@ const moveToProccessingOpts = {
     body: {
         schema: {
             type: 'object',
-            propertise: {
+            properties: {
                 apiKey: {
                     type: 'string',
                 },

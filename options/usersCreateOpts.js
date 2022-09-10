@@ -14,7 +14,8 @@ const usersCreateOpts = {
                     type: 'string',
                     enum: ['ecommerce', 'delivery']
                 }
-            }
+            },
+            required: ['email', 'type', 'password']
         }
     }
 }
