@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"transpik_backend","dependencies":{"@fastify/env":{"version":"4.1.0"},"fastify":{"version":"4.5.3"},"mongoose":{"version":"6.6.0"},"nodemon":{"version":"2.0.19"}}}

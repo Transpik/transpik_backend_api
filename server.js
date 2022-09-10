@@ -5,11 +5,14 @@ const fastify = require('fastify')({
 fastify.register(require('./routes/usersRoutes'));
 
 
-fastify.listen({port: 3000, host: 'localhost'}, (err, address) => {
-    if(err) {
+async function start() {
+    try {
+        await fastify.listen({ port: "8080", host: "localhost" });
+        await mongoose.connect('mongodb://localhost:27017/tp_db');
+    }catch(err) {
         console.error(err);
         process.exit(1);
     }
-    // when server is up and running perfectly
-    console.log(`Server is up and running at ${address}`);
-});
+}
+
+start();

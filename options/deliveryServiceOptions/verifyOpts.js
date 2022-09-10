@@ -2,7 +2,7 @@ const verifyOpts = {
     schema: {
         body: {
             type: 'object',
-            propertise : {
+            properties : {
                 email: {
                     type: 'string',
                     format: 'email',
@@ -15,7 +15,7 @@ const verifyOpts = {
                 },
                 location: {
                     type: 'object',
-                    propertise: {
+                    properties: {
                         address: {
                             type: 'string',
                         },
