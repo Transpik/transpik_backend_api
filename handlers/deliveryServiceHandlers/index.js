@@ -1,4 +1,5 @@
-const verifyHandler = require('./verifyHandler');
+const configChargesHandler = require('./configChargesHandler');
+const getAvailablePlansHandler = require('./getAvailablePlansHandler');
+const requestVerifyHandler = require('./requestVerifyHandler');
 
-
-module.exports = { verifyHandler };
+module.exports = { configChargesHandler, getAvailablePlansHandler, requestVerifyHandler};
