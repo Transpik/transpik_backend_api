@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { apiKeySchema } = require('../models/ApiKey');
+const { refreshTokenSchema } = require('./RefreshToken');
 
 const serviceConfigSchema = new mongoose.Schema({
     service_id: {
@@ -76,6 +77,7 @@ const ecommerceUserSchema = new mongoose.Schema({
         unique: true
     },
     using_services: [mongoose.Types.ObjectId],
+    //refreshTokens: [refreshTokenSchema]
     //apiKey: apiKeySchema,
     //config: [configSchema]
 });

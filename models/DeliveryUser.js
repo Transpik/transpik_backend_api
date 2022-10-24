@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const { apiKeySchema } = require('../models/ApiKey');
+const { refreshTokenSchema } = require('./RefreshToken');
 const { verificationSchema } = require('../models/Verification');
 const { Card, cardSchema } = require('./Card');
 
 const SK_TEST = require('../utils/StripeKeys');
 const stripe = require('stripe')(SK_TEST);
-const apikeygen = require('generate-api-key');
 
 const cityFeesSchema = new mongoose.Schema({
     postal_code: {
@@ -101,24 +101,8 @@ const deliveryUserSchema = new mongoose.Schema({
     verification_data: verificationSchema,
     subscription: subscriptionSchema,
     apikey: { type: String },
-    refreshTokens: [String]
+    //refreshTokens: [refreshTokenSchema]
 });
-
-// update password
-// generate a new api key =>
-// update api key =>
-// config methods charges
-// config packing charges
-// config delivery charges
-
-// billing and marketplace
-// get current plan
-// get available plans => done
-// purchase a plan => done
-// disable and enable subscription
-
-// set, update, delete, get cards => done
-// set checkout
 
 deliveryUserSchema.methods.createCustomerAccount = async function() {
     try {

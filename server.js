@@ -26,6 +26,12 @@ fastify.register(cors, {
     methods: ['GET', 'PATCH', 'PUT', 'POST', 'DELETE']
 })
 
+
+fastify.register(require('@fastify/cookie'), {
+    hook: 'onRequest', // set to false to disable cookie autoparsing or set autoparsing on any of the following hooks: 'onRequest', 'preParsing', 'preHandler', 'preValidation'. default: 'onRequest'
+    parseOptions: {}  // options for parsing cookies
+})
+
 const mongoose = require('mongoose'); 
 
 // load util procedures

@@ -39,19 +39,26 @@ async function userLoginHandler(request, response) {
             issuer: iss
         });
 
-        /*const refreshToken = new RefreshToken({ 
+        const refreshToken = new RefreshToken({ 
             key: refreshTokenKey,
             aud: type,
             period: accessTokenPeriod,
             iss: iss,
-            sub: user._id
-        });*/
+            sub: user._id.toString(),
+        });
 
-        user.refreshTokens.push(refreshTokenKey);
+        await refreshToken.save();
         await user.save();
-        response.header('set-cookie', refreshTokenKey);
-        response.code(200).send({
+        const redirect = (user.type === 'delivery') ? 'https://transpikdel.onrender.com' : 'https://transpikecom.onrender.com' 
+        response.code(200).setCookie('refreshToken', refreshTokenKey, {
+            domain: 'http://localhost:8080',
+            path: '/',
+            secure: true,
+            sameSite: 'lax',
+            httpOnly: true
+          }).send({
             data: {
+                redirect: redirect,
                 user: {
                     user_id: user._id,
                     email: user.email,
