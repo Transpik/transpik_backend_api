@@ -12,9 +12,18 @@ const fastify = require('fastify')({
     logger: true
 });
 
-require('@fastify/cors')({
+const cors = require('@fastify/cors')
+
+fastify.register(cors, { 
     origin: '*',
-    preflight: false
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'Origin',
+        'X-Requested-With',
+        'Accept'
+    ],
+    methods: ['GET', 'PATCH', 'PUT', 'POST', 'DELETE']
 })
 
 const mongoose = require('mongoose'); 
@@ -48,6 +57,7 @@ async function start() {
         await mongoose.connect(process.env.DB_STRING);
     }catch(err) {
         console.error(err);
+        console.log('error from fastify'+err.message);
         process.exit(1);
     }
 }
