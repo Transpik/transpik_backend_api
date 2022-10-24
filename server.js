@@ -12,11 +12,11 @@ const fastify = require('fastify')({
     logger: true
 });
 
-const cors = require('@fastify/cors');
+require('@fastify/cors')({
+    origin: '*',
+    preflight: false
+})
 
-fastify.register(cors, { 
-    origin: false
-});
 const mongoose = require('mongoose'); 
 
 // load util procedures
