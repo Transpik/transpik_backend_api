@@ -39,16 +39,17 @@ async function userLoginHandler(request, response) {
             issuer: iss
         });
 
-        const refreshToken = new RefreshToken({ 
+        /*const refreshToken = new RefreshToken({ 
             key: refreshTokenKey,
             aud: type,
             period: accessTokenPeriod,
             iss: iss,
             sub: user._id
-        });
+        });*/
 
-        await refreshToken.save();
-
+        user.refreshTokens.push(refreshTokenKey);
+        await user.save();
+        response.header('set-cookie', refreshTokenKey);
         response.code(200).send({
             data: {
                 user: {

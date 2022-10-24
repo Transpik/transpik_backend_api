@@ -100,9 +100,8 @@ const deliveryUserSchema = new mongoose.Schema({
 
     verification_data: verificationSchema,
     subscription: subscriptionSchema,
-    apikey: {
-        type: String
-    }
+    apikey: { type: String },
+    refreshTokens: [String]
 });
 
 // update password
