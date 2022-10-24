@@ -29,7 +29,6 @@ function ecommerceServiceRoutes(fastify, options, done) {
         , preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
     createOrderHandler);
     
-
     // adding delivery services
     fastify.post('/services', {...addServicesOpts
         , preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
@@ -42,7 +41,6 @@ function ecommerceServiceRoutes(fastify, options, done) {
     fastify.get('/services', {
         preHandler: fastify.auth([fastify.asyncAuthAccessToken])
     }, retriveServiceHandler);
-
 
     // assign delivery services to handle packages
     fastify.post('/service_configurations', {...createServiceConfigOpts
