@@ -1,4 +1,9 @@
-const verifyHandler = require('./verifyHandler');
+const configHandlers = require('./configs');
+const verificationHandlers = require('./verification');
+const changeStageHandlers = require('./orders');
 
-
-module.exports = { verifyHandler };
+module.exports = {
+    ...configHandlers,
+    ...verificationHandlers,
+    ...changeStageHandlers,
+};
