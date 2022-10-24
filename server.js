@@ -11,9 +11,7 @@ require('dotenv').config();
 const fastify = require('fastify')({
     logger: true
 });
-const mongoose = require('mongoose');
 
-// load ODM
 const mongoose = require('mongoose');
 
 // load util procedures
@@ -42,7 +40,7 @@ fastify.register(require('./routes/ecommerceServiceRoutes'));
 async function start() {
     try {
         await fastify.listen({ port: process.env.PORT, host: process.env.HOST });
-        await mongoose.connect('mongodb://localhost:27017/tp_db');
+        await mongoose.connect(process.env.DB_STRING);
     }catch(err) {
         console.error(err);
         process.exit(1);
