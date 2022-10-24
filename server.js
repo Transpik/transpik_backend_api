@@ -12,7 +12,12 @@ const fastify = require('fastify')({
     logger: true
 });
 
-const mongoose = require('mongoose');
+const cors = require('@fastify/cors');
+
+fastify.register(cors, { 
+    origin: false
+});
+const mongoose = require('mongoose'); 
 
 // load util procedures
 const asyncAuthAccessToken = require('./utils/asyncAuthAccessToken');
