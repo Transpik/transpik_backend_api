@@ -40,3 +40,5 @@ async function createRefundHandler(request, response) {
         session.endSession();
     }
 }
+
+module.exports = createRefundHandler;
