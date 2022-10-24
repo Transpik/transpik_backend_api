@@ -11,7 +11,7 @@ require('dotenv').config();
 const fastify = require('fastify')({
     logger: true
 });
-// load ODM
+
 const mongoose = require('mongoose');
 
 // load util procedures
