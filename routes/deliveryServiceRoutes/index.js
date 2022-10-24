@@ -12,12 +12,13 @@ const {
     createVerificationHandler,
     moveToDeliveringStageHandler,
     moveToProcessingStageHandler,
+    retriveOrdersHandler,
 } = require('../../handlers/deliveryServiceHandlers');
 
 
 function deliveryServiceRoutes(fastify, options, done) {
     
-    fastify.post('/accounts/delivery_services/verify', {...requestVerifyOpts,
+    fastify.post('/users/delivery_services/verify', {...requestVerifyOpts,
         preHandler: fastify.auth([fastify.asyncAuthAccessToken])
     }, createVerificationHandler);
 
@@ -32,6 +33,9 @@ function deliveryServiceRoutes(fastify, options, done) {
     fastify.get('/charges/delivery_services/:service_id', { 
         preHandler: fastify.auth([fastify.asyncAuthAccessToken])
     }, listChargeConfigHandler);
+
+    fastify.get('/orders', { preHandler: fastify.auth([fastify.asyncAuthAccessToken]) }
+    ,retriveOrdersHandler)
 
     fastify.patch('/orders/stages/delivering', {...moveToDeliveringOpts, 
         preHandler: fastify.auth([fastify.asyncAuthAccessToken])

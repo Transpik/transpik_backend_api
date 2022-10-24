@@ -23,6 +23,10 @@ const cityFeesSchema = new mongoose.Schema({
         type: mongoose.Types.Decimal128,
         required: true,
         default: 0
+    },
+    city: {
+        type: String,
+        //required: true
     }
 });
 

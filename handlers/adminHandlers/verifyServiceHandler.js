@@ -1,7 +1,7 @@
 const { Verification } = require('../../models/Verification');
 const DeliveryUser = require('../../models/DeliveryUser');
 const SK_TEST = require('../../utils/StripeKeys');
-const { default: fastify } = require('fastify');
+const loadPostalCodes = require('../../utils/loadPostalCodes');
 
 const stripe = require('stripe')(SK_TEST);
 
@@ -43,12 +43,10 @@ async function verifyServiceHandler(request, response) {
         }
         // based on the user country
         // we only support lk only yet
-        /*fastify.DB_LOC_POSTALCODES_DATA().forEach(code => {
-            user.config.charges[code] = { availability: false, fee: null };
-        })*/
-        //user.chargesConfigurations.country_code = 'LK';
-        [11725, 88756].forEach(code => {
-            user.charges_configurations.push({ postal_code: code, availability: false });
+
+        const postalCodes = loadPostalCodes();
+        postalCodes.forEach(entry => {
+            user.charges_configurations.push({ postal_code: entry.code , availability: false, city: entry.city });
         });
 
         user.verificationData = await verification.verify();
