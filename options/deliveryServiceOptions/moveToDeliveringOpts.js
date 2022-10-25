@@ -5,9 +5,12 @@ const moveToDeliveringOpts = {
             properties: {
                 order_id: {
                     type: 'string'
+                },
+                driver_id: {
+                    type: 'string'
                 }
             },
-            required: ['order_id']
+            required: ['order_id', 'driver_id']
         }
     }
 }

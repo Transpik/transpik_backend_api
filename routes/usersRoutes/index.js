@@ -17,6 +17,7 @@ const {
     setDefaultCardHanlder,
     listDeliveryAccountsHandler,
     silentAuthHandler,
+    retriveAccountHandler,
 } = require('../../handlers/userHandlers');
 const listCardsHandler = require('../../handlers/userHandlers/cards/listCardsHandler');
 
@@ -59,6 +60,10 @@ function userRoutes(fastify, options, done) {
             }
         }
     } ,silentAuthHandler);
+
+    fastify.get('/users', {preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
+        retriveAccountHandler
+    )
 
     // create card
     fastify.post('/cards', createCardOpts, createCardHandler);

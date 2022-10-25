@@ -49,7 +49,7 @@ async function verifyServiceHandler(request, response) {
             user.charges_configurations.push({ postal_code: entry.code , availability: false, city: entry.city });
         });
 
-        user.verificationData = await verification.verify();
+        user.verification_data = await verification.verify();
         await user.save();
         response.code(200).send({ data: { user: user }, message: "verification success"});
 

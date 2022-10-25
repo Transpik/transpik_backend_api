@@ -12,7 +12,6 @@ const cityFeesSchema = new mongoose.Schema({
     postal_code: {
         type: String,
         required: true,
-        unique: true
     },
     availability: {
         type: Boolean,
@@ -101,6 +100,7 @@ const deliveryUserSchema = new mongoose.Schema({
     verification_data: verificationSchema,
     subscription: subscriptionSchema,
     apikey: { type: String },
+    service_users: [mongoose.Types.ObjectId],
     //refreshTokens: [refreshTokenSchema]
 });
 

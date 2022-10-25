@@ -23,6 +23,16 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    delivery_service_name: {
+        type: String,
+        required: true
+    },
+    assigned_driver_id: {
+        type: mongoose.Types.ObjectId
+    },
+    assigned_driver_name: {
+        type: String
+    },
     /*delivery_method: {
         type: String,
         enum: ['express', 'normal', 'oneday'],
@@ -36,7 +46,7 @@ const orderSchema = new mongoose.Schema({
         care: { type: Boolean },
         normal: { type: Boolean },
     },*/
-    pickup_loaction: locationSchema,
+    pickup_location: locationSchema,
     delivery_location: locationSchema,
     order_fee: { type: mongoose.Types.Decimal128, required: true },
     /*order_fee_details: {
@@ -75,9 +85,7 @@ const orderSchema = new mongoose.Schema({
 orderSchema.methods.moveToProcessingStage = async function moveToProcessingStage() {
     try {
         this.order_status = 'processing';
-        this.progress.push("collecting goods from warehouse");
-        await this.save();
-        return this;
+        this.progress.push({message: "collecting goods from warehouse"});
     }catch(error) {
         return error;
     }
@@ -86,9 +94,7 @@ orderSchema.methods.moveToProcessingStage = async function moveToProcessingStage
 orderSchema.methods.moveToDeliveringStage = async function moveToDeliveringStage() {
     try {
         this.order_status = 'delivering'; // need to modify
-        this.progress.push("order is delivering");
-        await this.save();
-        return this;
+        this.progress.push({message:"order is delivering"});
     }catch(error) {
         return error;
     }

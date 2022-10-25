@@ -37,7 +37,7 @@ async function createPaymentHandler(request, response) {
         await deliveryUser.save();
         await order.save();
         await session.commitTransaction();
-        response.code(201).send({ data: { payment: payment_info }, message: "payment success"});
+        response.code(200).send({ data: { payment: payment_info }, message: "payment success"});
     }catch(error) {
         await session.abortTransaction();
         response.code(400).send( { data: {}, message: error.message });

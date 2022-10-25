@@ -10,7 +10,7 @@ async function updateChargeConfigHandler(request, response) {
         chargeConfig.fee = city_fees.fee;
         await user.save();
 
-        response.code(200).send({ data: { charge_configs: user.charges_configurations }, message: "config updated success"});
+        response.code(200).send({ data: { charge_configurations: user.charges_configurations }, message: "config updated success"});
     }catch(error) {
         response.code(400).send({ data: {}, message: error.message});
     }

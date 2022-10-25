@@ -21,7 +21,8 @@ fastify.register(cors, {
         'Authorization',
         'Origin',
         'X-Requested-With',
-        'Accept'
+        'Accept',
+        'Access-Token'
     ],
     credentials: true,
     methods: ['GET', 'PATCH', 'PUT', 'POST', 'DELETE']

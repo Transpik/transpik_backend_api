@@ -6,6 +6,8 @@ const {
     removeServiceConfigOpts,
     updateServiceConfigOpts,
     createPaymentsOpts,
+    updatePasswordOpts,
+    updateAccountDetailsOpts,
 } = require('../../options/ecommerceServiceOtions');
 
 const {
@@ -18,16 +20,39 @@ const {
     createPaymentHandler,
     deleteServiceHandler,
     retriveServiceHandler,
+    updateAccountPasswordHandler,
+    updateAccountDetailsHandler,
+    listAvailableServiceHandler,
+    listCompletedOrdersHander,
+    listOngoingOrdersHandler,
 } = require('../../handlers/ecommerceServiceHandlers');
 
 function ecommerceServiceRoutes(fastify, options, done) {
     
+    fastify.patch('/users/ecommerce_services/details', { ...updateAccountDetailsOpts
+        ,preHandler: fastify.auth([fastify.asyncAuthAccessToken])
+    }, updateAccountDetailsHandler);
+
+    fastify.get('/users/delivery_services/verified', { preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, listAvailableServiceHandler)
+
+    fastify.patch('/users/security', { ...updatePasswordOpts
+        ,preHandler: fastify.auth([fastify.asyncAuthAccessToken])
+    }, updateAccountPasswordHandler);
+
     // orders
 
     // create order
     fastify.post('/orders', {...ordersCreateOpts
         , preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
     createOrderHandler);
+
+    fastify.get('/orders/ongoing', {
+        preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
+    listOngoingOrdersHandler);
+
+    fastify.get('/orders/completed', {
+        preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
+    listCompletedOrdersHander);
     
     // adding delivery services
     fastify.post('/services', {...addServicesOpts
