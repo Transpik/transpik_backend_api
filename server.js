@@ -15,7 +15,7 @@ const fastify = require('fastify')({
 const cors = require('@fastify/cors')
 
 fastify.register(cors, { 
-    origin: '*',
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
     allowedHeaders: [
         'Content-Type',
         'Authorization',
@@ -23,6 +23,7 @@ fastify.register(cors, {
         'X-Requested-With',
         'Accept'
     ],
+    credentials: true,
     methods: ['GET', 'PATCH', 'PUT', 'POST', 'DELETE']
 })
 

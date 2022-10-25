@@ -6,8 +6,8 @@ const KEY = require('../../../utils/KEY');
 
 
 async function silentAuthHandler(request, response) {
+    const { refreshToken } = request.body;
     try {
-        const refreshToken = req.cookies.refreshToken;
         if(!refreshToken) throw new Error('refresh token not found');
 
         const payload = jwt.verify(refreshToken, KEY)
@@ -16,7 +16,7 @@ async function silentAuthHandler(request, response) {
 
         if(!user) throw new Error('user not found');
         const accessTokenPeriod = '2d';
-        const iss = 'http://localhost:8080';
+        const iss = 'https://transpikapi.onrender.com';
         const accessTokenKey = await jwt.sign({}, KEY, {
             audience: user.type,
             expiresIn: accessTokenPeriod,
@@ -24,7 +24,7 @@ async function silentAuthHandler(request, response) {
             issuer: iss
         });
 
-        response.code(200).send({ data: { accessToken: accessTokenKey }, message: 'success'});
+        response.code(200).send({ data: { accessToken: accessTokenKey, refreshToken: refreshToken}, message: 'success'});
     }catch(error) {
         response.code(304).redirect(303, 'https://transpikland.onrender.com/login');
     }

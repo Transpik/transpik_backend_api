@@ -20,7 +20,7 @@ async function userLoginHandler(request, response) {
 
         // when password valid
         const refreshTokenPeriod = '30d';
-        const iss = 'http://localhost:8080';
+        const iss = 'https://transpikapi.onrender.com';
         const refreshTokenKey = await jwt.sign({
             period: refreshTokenPeriod, 
         }, KEY, 
@@ -49,14 +49,9 @@ async function userLoginHandler(request, response) {
 
         await refreshToken.save();
         await user.save();
-        const redirect = (user.type === 'delivery') ? 'https://transpikdel.onrender.com' : 'https://transpikecom.onrender.com' 
-        response.code(200).setCookie('refreshToken', refreshTokenKey, {
-            domain: 'http://localhost:8080',
-            path: '/',
-            secure: true,
-            sameSite: 'lax',
-            httpOnly: true
-          }).send({
+        let redirect = (user.type === 'delivery') ? 'https://transpikdel.onrender.com' : 'https://transpikecom.onrender.com';
+        redirect = redirect+'?auth='+refreshTokenKey; 
+        response.code(200).send({
             data: {
                 redirect: redirect,
                 user: {

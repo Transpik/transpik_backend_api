@@ -48,7 +48,17 @@ function userRoutes(fastify, options, done) {
     // user login
     fastify.post('/users/login', userLoginOpts, userLoginHandler);
 
-    fastify.get('/users/silent_auth', silentAuthHandler);
+    fastify.post('/users/silent_auth', { 
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    refreshToken: { type: 'string' }
+                },
+                required: ['refreshToken']
+            }
+        }
+    } ,silentAuthHandler);
 
     // create card
     fastify.post('/cards', createCardOpts, createCardHandler);
