@@ -17,6 +17,8 @@ async function userCreateHandler(request, response) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = (type === 'delivery')? new DeliveryUser({ email, password: hashedPassword }) : new EcommerceUser({ email, password: hashedPassword });
 
+        
+        //await user.createCustomerAccount();
         await user.save();
         response.code(201).send({ data: {
             user: {

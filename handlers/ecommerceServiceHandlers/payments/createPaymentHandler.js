@@ -33,11 +33,11 @@ async function createPaymentHandler(request, response) {
         order.payment_status = 'paid';
         order.payment_id = payment._id;
         deliveryUser.earnings.ongoing_balance += order.order_fee;
-        const payment_info = await payment.makePayment();
+        await payment.makePayment();
         await deliveryUser.save();
         await order.save();
         await session.commitTransaction();
-        response.code(200).send({ data: { payment: payment_info }, message: "payment success"});
+        response.code(200).send({ data: { payment: payment }, message: "payment success"});
     }catch(error) {
         await session.abortTransaction();
         response.code(400).send( { data: {}, message: error.message });

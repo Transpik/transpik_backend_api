@@ -18,6 +18,7 @@ const {
     listDeliveryAccountsHandler,
     silentAuthHandler,
     retriveAccountHandler,
+    retriveOrderByIdHandler,
 } = require('../../handlers/userHandlers');
 const listCardsHandler = require('../../handlers/userHandlers/cards/listCardsHandler');
 
@@ -80,6 +81,8 @@ function userRoutes(fastify, options, done) {
 
     // list delivery accounts
     fastify.get('/users/delivery_users', listDeliveryAccountsHandler);
+
+    fastify.get('/orders/:order_id', retriveOrderByIdHandler);
     done();
 }
 

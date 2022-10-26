@@ -10,6 +10,7 @@ const setDefaultCardHanlder = require('./cards/setDefaultCardHandler');
 const removeCardHandler = require('./cards/removeCardHanlder');
 const listCardHandler = require('./cards/listCardsHandler');
 const retriveAccountHandler = require('./users/retriveAccountHandler');
+const retriveOrderByIdHandler = require('./retriveOrderByIdHandler');
 
 module.exports = { 
     userCreateHandler, 
@@ -21,4 +22,5 @@ module.exports = {
     listDeliveryAccountsHandler, 
     silentAuthHandler,
     retriveAccountHandler,
+    retriveOrderByIdHandler,
 };

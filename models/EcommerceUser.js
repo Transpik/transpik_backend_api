@@ -88,12 +88,9 @@ ecommerceUserSchema.methods.createCustomerAccount = async function() {
     try {
         const customer = await stripe.customers.create({
             email: this.email,
-            name: this.name || null,
             discription: `Ecommerce User - ${this._id}`
         });
         this.customer_id = customer.id;
-        await this.save();
-        return customer;
     }catch(error) {
         return error;
     }

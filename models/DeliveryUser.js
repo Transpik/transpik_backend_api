@@ -108,13 +108,9 @@ deliveryUserSchema.methods.createCustomerAccount = async function() {
     try {
         const customer = await stripe.customers.create({
             email: this.email,
-            address: this.verificationData.location.address || null,
-            name: this.verificationData.businessName,
             discription: `Delivery User - ${this._id}`
         });
         this.customer_id = customer.id;
-        await this.save();
-        return customer;
     }catch(error) {
         return error;
     }
