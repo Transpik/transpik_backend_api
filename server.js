@@ -15,7 +15,7 @@ const fastify = require('fastify')({
 const cors = require('@fastify/cors')
 
 fastify.register(cors, { 
-    origin: ['https://transpikecom.onrender.com', 'https://transpikdel.onrender.com', 'https://transpikland.onrender.com'],
+    origin: ['https://transpikecom.onrender.com', 'https://transpikdel.onrender.com', 'https://transpikland.onrender.com', 'http://127.0.0.1'],
     allowedHeaders: [
         'Content-Type',
         'Authorization',
