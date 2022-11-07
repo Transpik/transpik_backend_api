@@ -19,6 +19,7 @@ const {
     silentAuthHandler,
     retriveAccountHandler,
     retriveOrderByIdHandler,
+    createCustomerAccountHandler,
 } = require('../../handlers/userHandlers');
 const listCardsHandler = require('../../handlers/userHandlers/cards/listCardsHandler');
 
@@ -62,21 +63,21 @@ function userRoutes(fastify, options, done) {
         }
     } ,silentAuthHandler);
 
-    fastify.get('/users', {preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
+    fastify.get('/users/:user_id', {preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
         retriveAccountHandler
     )
 
     // create card
-    fastify.post('/cards', createCardOpts, createCardHandler);
+    fastify.post('/cards', {...createCardOpts, preHandler: fastify.auth([fastify.asyncAuthAccessToken]) }, createCardHandler); // doesn't recommend
 
     // list cards
-    fastify.get('/cards', listCardHandler);
+    fastify.get('/cards', {preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, listCardHandler);
 
     // remove card
-    fastify.delete('/cards', removeCardOpts, removeCardHandler);
+    fastify.delete('/cards', {...removeCardOpts, preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, removeCardHandler);
 
     // set default card
-    fastify.post('/cards/default', setDefaultCardOpts, setDefaultCardHanlder);
+    fastify.post('/cards/default', {...setDefaultCardOpts, preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, setDefaultCardHanlder);
 
 
     // list delivery accounts

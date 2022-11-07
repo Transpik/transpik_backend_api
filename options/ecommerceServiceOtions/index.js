@@ -7,6 +7,7 @@ const createPaymentsOpts = require('./createPaymentsOpts');
 const updateServiceConfigOpts = require('./updateServiceConfigOpts');
 const updateAccountDetailsOpts = require('./updateAccountDetailsOpts');
 const updatePasswordOpts = require('./updatePasswordOpts');
+const createRefundOpts = require('./createRefundOpts');
 
 module.exports = {
     addServicesOpts,
@@ -18,4 +19,5 @@ module.exports = {
     updateServiceConfigOpts,
     updateAccountDetailsOpts,
     updatePasswordOpts,
+    createRefundOpts
 }

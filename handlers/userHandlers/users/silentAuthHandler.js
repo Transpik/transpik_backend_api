@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const DeliveryUser = require('../../../models/DeliveryUser');
 const EcommerceUser = require('../../../models/EcommerceUser');
 const RefreshToken = require('../../../models/RefreshToken');
-const KEY = require('../../../utils/KEY');
+const KEY = process.env.TOKEN_KEY;
 
 
 async function silentAuthHandler(request, response) {

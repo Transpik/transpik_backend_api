@@ -1,4 +1,4 @@
-const SK_TEST = require('../../../utils/StripeKeys');
+const SK_TEST = process.env.STRIPE_KEY;
 const stripe = require('stripe')(SK_TEST);
 
 async function createPlanHandler(request, response) {

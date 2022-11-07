@@ -22,7 +22,8 @@ fastify.register(cors, {
         'Origin',
         'X-Requested-With',
         'Accept',
-        'Access-Token'
+        'Access-Token',
+        'Admin-Token'
     ],
     credentials: true,
     methods: ['GET', 'PATCH', 'PUT', 'POST', 'DELETE']
@@ -44,6 +45,8 @@ fastify.decorateRequest('user', null);
 
 // decorate preHandling procedures
 fastify.decorate('asyncAuthAccessToken', asyncAuthAccessToken);
+
+fastify.decorate('STRIPE_KEY', process.env.STRIPE_KEY);
 
 // register auth plugin
 fastify.register(require('@fastify/auth'));

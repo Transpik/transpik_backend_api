@@ -1,3 +1,0 @@
-const SK_TEST = "sk_test_51LbOwqLcYyIKTYcI0mlWb09jKFX6oD3TeWT7ZBK7j2r5xcbQp0hRlFd0qmBm054GtWiCGvBJRbqTJXWoJCtguWPG007saivJ67";
-
-module.exports = SK_TEST;

@@ -43,7 +43,7 @@ function deliveryServiceRoutes(fastify, options, done) {
     fastify.get('/orders', { preHandler: fastify.auth([fastify.asyncAuthAccessToken]) }
     ,retriveOrdersHandler)
 
-    fastify.get('/orders/incomming', { preHandler: fastify.auth([fastify.asyncAuthAccessToken]) }
+    fastify.get('/orders/incoming', { preHandler: fastify.auth([fastify.asyncAuthAccessToken]) }
     ,retriveIncommmingOrdersHandler)
 
     fastify.get('/orders/processing', { preHandler: fastify.auth([fastify.asyncAuthAccessToken]) }

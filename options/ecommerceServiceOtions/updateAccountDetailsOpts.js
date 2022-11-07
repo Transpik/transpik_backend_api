@@ -5,9 +5,9 @@ const updateAccountDetailsOpts = {
             properties: {
                 url: { type: 'string' },
                 name: { type: 'string' },
-            }
-        },
-        required: ['url', 'name']
+            },
+            required: ['url', 'name']
+        }
     }
 }
 

@@ -3,6 +3,7 @@ const userCreateHandler = require('./users/userCreateHandler');
 const userLoginHandler = require('./users/userLoginHandler');
 const listDeliveryAccountsHandler = require('./users/listDeliveryAccountsHandler');
 const silentAuthHandler = require('./users/silentAuthHandler'); 
+const createCustomerAccountHandler = require('./cards/createCustomerAccountHandler');
 
 // cards handlers
 const createCardHandler = require('./cards/createCardHandler');
@@ -23,4 +24,5 @@ module.exports = {
     silentAuthHandler,
     retriveAccountHandler,
     retriveOrderByIdHandler,
+    createCustomerAccountHandler,
 };

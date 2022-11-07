@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const { apiKeySchema } = require('../models/ApiKey');
 const { refreshTokenSchema } = require('./RefreshToken');
+const SK_TEST = process.env.STRIPE_KEY;
+const stripe = require('stripe')(SK_TEST);
 
 const serviceConfigSchema = new mongoose.Schema({
     service_id: {
@@ -73,8 +75,7 @@ const ecommerceUserSchema = new mongoose.Schema({
         }
     }],
     customer_id: {
-        type: String,
-        unique: true
+        type: String
     },
     using_services: [mongoose.Types.ObjectId],
     //refreshTokens: [refreshTokenSchema]
@@ -84,83 +85,63 @@ const ecommerceUserSchema = new mongoose.Schema({
 
 
 
-ecommerceUserSchema.methods.createCustomerAccount = async function() {
-    try {
-        const customer = await stripe.customers.create({
-            email: this.email,
-            discription: `Ecommerce User - ${this._id}`
-        });
-        this.customer_id = customer.id;
-    }catch(error) {
-        return error;
-    }
+ecommerceUserSchema.methods.createCustomerAccount = async function createCustomerAccount() {
+    const customer = await stripe.customers.create({
+        email: this.email,
+        description: `Delivery User - ${this._id}`
+    });
+    this.customer_id = customer.id;
 }   
 
-ecommerceUserSchema.methods.updateCustomerAccount = async function () {
+ecommerceUserSchema.methods.updateCustomerAccount = async function updateCustomerAccount() {
 
 }
 
-ecommerceUserSchema.methods.setCard = async function(card) {
-    try {
-        if(this.customer_id) throw new Error("customer doesn't exists");
-        const card = await stripe.customers.createSource(this.customer_id, {
-            source: {
-                object: 'card',
-                number: card.number,
-                exp_month: card.exp_month,
-                exp_year: card.exp_year,
-                cvc: card.cvc,
-                name: card.name,
-                address_line1: card.address
-            }
-        });
-        return card;
-    }catch(error) {
-        return error;
-    }
+ecommerceUserSchema.methods.setCard = async function setCard(card) {
+    if(this.customer_id) throw new Error("customer doesn't exists");
+    const createdCard = await stripe.customers.createSource(this.customer_id, {
+        source: {
+            object: 'card',
+            number: card.number,
+            exp_month: card.exp_month,
+            exp_year: card.exp_year,
+            cvc: card.cvc,
+            name: card.name,
+            address_line1: card.address
+        }
+    });
+    return createdCard;
 }
 
-ecommerceUserSchema.methods.setDefaultCard = async function(card_id) {
-    try{
-        const card = await stripe.customers.retrieveSource(
-            this.customer_id,
-            card_id
+ecommerceUserSchema.methods.setDefaultCard = async function setDefaultCard(card_id) {
+    const card = await stripe.customers.retrieveSource(
+        this.customer_id,
+        card_id
+    );
+    const customer = await stripe.customers.update(
+        this.customer_id,
+        {
+            default_source: card.id
+        }
         );
-        const customer = await stripe.customers.update(
-            this.customer_id,
-            {
-                default_source: card.id
-            }
-            );
-        return customer;
-    }catch(error) {
-        return error;
-    }
+    return customer;
 }
 
-ecommerceUserSchema.methods.listAllCards = async function() {
-    try {
-        const cards = await stripe.customers.listSources(
-            this.customer_id,
-            {object: 'card'}
-        );
-        return cards;
-    }catch(error) {
-        return error;
-    }
+ecommerceUserSchema.methods.listAllCards = async function listAllCards() {
+    const cards = await stripe.customers.listSources(
+        this.customer_id,
+        {object: 'card'}
+    );
+    return cards;
 }
 
-ecommerceUserSchema.methods.removeCard = async function(card_id) {
-    try {
-        const card = this.cards.id(card_id);
-        const deleted = await stripe.customers.deleteSource(
-            this.customer_id,
-            card.card_id
-        );
-        return deleted;
-    }catch(error) {
-        return error;
-    }
+ecommerceUserSchema.methods.removeCard = async function removeCard(card_id) {
+    const card = this.cards.id(card_id);
+    const deleted = await stripe.customers.deleteSource(
+        this.customer_id,
+        card.card_id
+    );
+    return deleted;
 }
 
 const EcommerceUser = mongoose.model('EcommerceUser', ecommerceUserSchema);

@@ -4,7 +4,7 @@ const EcommerceUser = require('../../../models/EcommerceUser');
 const {RefreshToken} = require('../../../models/RefreshToken');
 const jwt = require('jsonwebtoken');
 
-const KEY = require('../../../utils/KEY');
+const KEY = process.env.TOKEN_KEY;
 
 async function userLoginHandler(request, response) {
     const { email, password, type } = request.body;

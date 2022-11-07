@@ -8,6 +8,7 @@ const {
     createPaymentsOpts,
     updatePasswordOpts,
     updateAccountDetailsOpts,
+    createRefundOpts,
 } = require('../../options/ecommerceServiceOtions');
 
 const {
@@ -25,6 +26,7 @@ const {
     listAvailableServiceHandler,
     listCompletedOrdersHander,
     listOngoingOrdersHandler,
+    createRefundHandler,
 } = require('../../handlers/ecommerceServiceHandlers');
 
 function ecommerceServiceRoutes(fastify, options, done) {
@@ -87,6 +89,10 @@ function ecommerceServiceRoutes(fastify, options, done) {
     fastify.post('/payments', {...createPaymentsOpts
         , preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
     createPaymentHandler);
+
+    fastify.post('/refunds', {...createRefundOpts
+        , preHandler: fastify.auth([fastify.asyncAuthAccessToken])}, 
+    createRefundHandler);
 
     done();
 }
