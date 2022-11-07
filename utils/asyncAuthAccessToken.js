@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const accessTokenSchema = require('../schemas/accessTokenJoiSchema');
 const DeliveryUser = require('../models/DeliveryUser');
 const EcommerceUser = require('../models/EcommerceUser');
-const KEY = require('../utils/KEY');
+const KEY = process.env.TOKEN_KEY;
 
 
 async function asyncAuthAccessToken(request, response) {

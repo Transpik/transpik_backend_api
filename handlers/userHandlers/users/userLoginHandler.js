@@ -4,7 +4,7 @@ const EcommerceUser = require('../../../models/EcommerceUser');
 const {RefreshToken} = require('../../../models/RefreshToken');
 const jwt = require('jsonwebtoken');
 
-const KEY = require('../../../utils/KEY');
+const KEY = process.env.TOKEN_KEY;
 
 async function userLoginHandler(request, response) {
     const { email, password, type } = request.body;
@@ -20,7 +20,7 @@ async function userLoginHandler(request, response) {
 
         // when password valid
         const refreshTokenPeriod = '30d';
-        const iss = 'http://localhost:8080';
+        const iss = 'https://transpikapi.onrender.com';
         const refreshTokenKey = await jwt.sign({
             period: refreshTokenPeriod, 
         }, KEY, 
@@ -44,13 +44,16 @@ async function userLoginHandler(request, response) {
             aud: type,
             period: accessTokenPeriod,
             iss: iss,
-            sub: user._id
+            sub: user._id.toString(),
         });
 
         await refreshToken.save();
-
+        await user.save();
+        let redirect = (user.type === 'delivery') ? 'https://transpikdel.onrender.com' : 'https://transpikecom.onrender.com';
+        redirect = redirect+'?auth='+refreshTokenKey; 
         response.code(200).send({
             data: {
+                redirect: redirect,
                 user: {
                     user_id: user._id,
                     email: user.email,

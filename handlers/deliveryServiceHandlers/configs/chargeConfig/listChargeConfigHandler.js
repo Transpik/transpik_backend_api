@@ -3,9 +3,10 @@ const DeliveryUser = require('../../../../models/DeliveryUser');
 // available for both ecommerce and delivery
 async function listChargeConfigHandler(request, response) {
     const user = request.user;
-    const { service_id } = request.params;
+    //let { service_id } = request.params;
     try {
-        if(!service_id) service_id = user._id;
+        //if(!service_id) 
+        const service_id = user._id;
         const deliveryUser = await DeliveryUser.findById(service_id).exec();
         if(!deliveryUser) throw new Error('delivery user not exists');
         const chargeConfigs = deliveryUser.charges_configurations;

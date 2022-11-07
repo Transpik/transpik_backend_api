@@ -47,7 +47,7 @@ const verificationSchema = new mongoose.Schema({
 
 verificationSchema.methods.verify = async function() {
     const verification = this;
-    verification.verifiedStatus = true;
+    verification.verified_status = true;
     await verification.save();
     return verification;
 }

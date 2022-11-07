@@ -1,6 +1,6 @@
 const Confirm = require('../../../../models/Confirm');
 const Order = require('../../../../models/Order');
-const SK_TEST = require('../../../../utils/StripeKeys');
+const SK_TEST = process.env.STRIPE_KEY;
 const stripe = require('stripe')(SK_TEST);
 const  DeliveryUser = require('../../../../models/DeliveryUser');
 

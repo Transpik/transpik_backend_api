@@ -3,6 +3,7 @@ const serviceHandlers = require('./configs/services');
 const refundHandlers = require('./refunds');
 const orderHandlers = require('./orders');
 const paymentHandlers = require('./payments');
+const accountHandlers = require('./account');
 
 
 module.exports = { 
@@ -11,4 +12,5 @@ module.exports = {
     ...refundHandlers,
     ...orderHandlers,
     ...paymentHandlers,
+    ...accountHandlers,
 };

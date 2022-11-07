@@ -12,9 +12,27 @@ const fastify = require('fastify')({
     logger: true
 });
 
-require('@fastify/cors')({
-    origin: '*',
-    preflight: false
+const cors = require('@fastify/cors')
+
+fastify.register(cors, { 
+    origin: ['https://transpikecom.onrender.com', 'https://transpikdel.onrender.com', 'https://transpikland.onrender.com', 'http://127.0.0.1'],
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'Origin',
+        'X-Requested-With',
+        'Accept',
+        'Access-Token',
+        'Admin-Token'
+    ],
+    credentials: true,
+    methods: ['GET', 'PATCH', 'PUT', 'POST', 'DELETE']
+})
+
+
+fastify.register(require('@fastify/cookie'), {
+    hook: 'onRequest', // set to false to disable cookie autoparsing or set autoparsing on any of the following hooks: 'onRequest', 'preParsing', 'preHandler', 'preValidation'. default: 'onRequest'
+    parseOptions: {}  // options for parsing cookies
 })
 
 const mongoose = require('mongoose'); 
@@ -27,6 +45,8 @@ fastify.decorateRequest('user', null);
 
 // decorate preHandling procedures
 fastify.decorate('asyncAuthAccessToken', asyncAuthAccessToken);
+
+fastify.decorate('STRIPE_KEY', process.env.STRIPE_KEY);
 
 // register auth plugin
 fastify.register(require('@fastify/auth'));
@@ -48,6 +68,7 @@ async function start() {
         await mongoose.connect(process.env.DB_STRING);
     }catch(err) {
         console.error(err);
+        console.log('error from fastify'+err.message);
         process.exit(1);
     }
 }

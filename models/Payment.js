@@ -1,4 +1,4 @@
-const SK_TEST = require('../utils/StripeKeys');
+const SK_TEST = process.env.STRIPE_KEY;
 const stripe = require('stripe')(SK_TEST);
 const mongoose = require('mongoose');
 
@@ -9,17 +9,17 @@ const paymentSchema = new mongoose.Schema({
     },
     payment_method_id: {
         type: String,
-        unique: true,
-        required: true
+        //unique: true,
+        //required: true
     },
     order_id: {
         type: mongoose.Types.ObjectId,
         unique: true,
-        required: true
+        //required: true
     },
     fee: {
         type: mongoose.Types.Decimal128,
-        required: true
+        //required: true
     },
     is_refunded: {
         type: Boolean,
@@ -36,22 +36,16 @@ const paymentSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-paymentSchema.methods.makePayment = async function() {
-    try {
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: this.fee,
-            currency: 'usd',
-            payment_method_types: ['card'],
-            confirm: true,
-            payment_method: this.payment_method_id
-        });
-        this.payment_intent_id = paymentIntent._id;
-        this.payment_intent = paymentIntent;
-        await this.save();
-        return this;
-    }catch(error) {
-        return error;
-    }
+paymentSchema.methods.makePayment = async function makePayment() {
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: this.fee,
+        currency: 'usd',
+        payment_method_types: ['card'],
+        confirm: true,
+        payment_method: this.payment_method_id
+    });
+    this.payment_intent_id = paymentIntent._id;
+    this.payment_intent = paymentIntent;
 }
 
 const Payment = mongoose.model('Payment', paymentSchema);

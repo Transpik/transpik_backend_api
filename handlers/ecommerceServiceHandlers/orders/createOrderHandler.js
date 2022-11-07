@@ -35,10 +35,11 @@ async function createOrderHandler(request, response) {
             order_fee: fee,
             estimated_time: estimated_time,
             delivery_service_id: serviceConfigs.delivery_service_id,
-            ecommerce_service_id: user._id
+            ecommerce_service_id: user._id,
+            delivery_service_name: delivery_user.verification_data.business_name
         });
         await order.save();
-        response.code(201).send({ data: { order: order }, message: 'order created success'});
+        response.code(200).send({ data: { order: order }, message: 'order created success'});
     }catch(error) {
         response.code(400).send({ data: {}, message: error.message });
     }

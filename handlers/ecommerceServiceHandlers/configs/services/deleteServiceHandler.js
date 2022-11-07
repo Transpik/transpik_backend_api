@@ -2,9 +2,9 @@ async function deleteServiceHandler(request, response) {
     const user = request.user;
     const { delivery_service_id } = request.body;
     try {
-        const usingServices = user.usingServices;
+        const usingServices = user.using_services;
         if(usingServices.indexOf(delivery_service_id) < 0) throw new Error('service is not using');
-        user.usingServices.pull(delivery_service_id);
+        user.using_services.pull(delivery_service_id);
         await user.save();
         response.code(200).send({ data: { using_services: usingServices }, message: "success"});
     }catch(error) {

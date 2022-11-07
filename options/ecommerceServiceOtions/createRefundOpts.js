@@ -1,15 +1,15 @@
-const removeCardOpts = {
+const createRefundOpts = {
     schema: {
         body: {
             type: 'object',
             properties: {
-                card_id: {
+                payment_id: {
                     type: 'string'
                 }
             },
-            required: ['card_id']
+            required: ['payment_id']
         }
     }
 }
 
-module.exports = removeCardOpts;
+module.exports = createRefundOpts;

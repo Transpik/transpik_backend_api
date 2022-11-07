@@ -1,6 +1,6 @@
 const { Verification } = require('../../models/Verification');
 const DeliveryUser = require('../../models/DeliveryUser');
-const SK_TEST = require('../../utils/StripeKeys');
+const SK_TEST = process.env.STRIPE_KEY;
 const loadPostalCodes = require('../../utils/loadPostalCodes');
 
 const stripe = require('stripe')(SK_TEST);
@@ -18,7 +18,7 @@ async function verifyServiceHandler(request, response) {
         if(!user.account_id) {
             const account = await stripe.accounts.create({
                 type: 'custom',
-                country: verification.location.country_code, // US
+                //country: verification.location.country_code, // US
                 email: user.email,
                 business_type: 'company',
                 company: {
@@ -30,7 +30,7 @@ async function verifyServiceHandler(request, response) {
                         postal_code: verification.location.postalCode
                     },*/
                     name: verification.business_name,
-                    registration_number: verification.business_reg_no,
+                    //registration_number: verification.business_reg_no,
                 },
                 capabilities: {
                 card_payments: {requested: true},
@@ -49,7 +49,7 @@ async function verifyServiceHandler(request, response) {
             user.charges_configurations.push({ postal_code: entry.code , availability: false, city: entry.city });
         });
 
-        user.verificationData = await verification.verify();
+        user.verification_data = await verification.verify();
         await user.save();
         response.code(200).send({ data: { user: user }, message: "verification success"});
 
